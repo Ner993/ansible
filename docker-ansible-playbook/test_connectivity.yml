@@ -1,0 +1,10 @@
+[servers]
+server1 ansible_host= ansible_user=tekn1 ansible_user_password=1432
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3---
+- name: Test connectivity to localhost
+  hosts: local
+  tasks:
+    - name: Ping localhost
+      ping:
