@@ -1,0 +1,27 @@
+- name: Ensure the monitoring directory exists
+  file:
+    path: /opt/monitoring
+    state: directory
+    mode: '0755'
+
+- name: Copy Prometheus configuration file
+  template:
+    src: prometheus.yml.j2
+    dest: /opt/monitoring/prometheus.yml
+
+- name: Copy Grafana provisioning files
+  copy:
+    src: grafana_provisioning/
+    dest: /opt/monitoring/grafana_provisioning/
+    mode: '0755'
+
+- name: Copy docker-compose.yml from template
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/monitoring/docker-compose.yml
+
+- name: Start Prometheus and Grafana with Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: /opt/monitoring/
+
